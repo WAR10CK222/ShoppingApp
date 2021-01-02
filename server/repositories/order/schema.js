@@ -4,7 +4,7 @@ const GroceryModel = require('../grocery/model');
 module.exports = new mongoose.Schema ({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserModel'
+        ref: 'User'
     },
-    items: [{type: mongoose.Schema.Types.ObjectId, ref: 'GroceryModel'}]
+    items: [{type: mongoose.Schema.Types.ObjectId, ref: 'Grocery'}]
 })

@@ -6,6 +6,13 @@ function get(req, res) {
         .catch(err => console.log(err));
 }
 
+function postNew(req,res) {
+    (new Grocery(req.body)).save()
+        .then(grocery => res.send(grocery))
+        .catch(err => res.send(err));
+}
+
 module.exports = {
-    get
+    get,
+    postNew
 }
