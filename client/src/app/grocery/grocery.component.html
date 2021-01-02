@@ -1,0 +1,15 @@
+<div class="container">
+    <h2>{{title}}</h2>
+    <div class="container-fluid grocery-main-container">
+        <div class="row grocery-main-row">
+            <!-- Every Grocery Item -->
+            <div *ngFor="let grocery of groceries" class="col-lg-3 col-md-3 col-sm-3 col-xs-12 grocery-main-row-item card">
+                <img class="card-img-top" src="{{grocery.image_url}}" alt="">
+                <div class="card-body text-center">
+                    <p class="card-title">{{grocery.name}}</p>
+                    <a href="#" class="btn btn-outline-success">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
