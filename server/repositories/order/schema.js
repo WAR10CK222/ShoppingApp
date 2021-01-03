@@ -6,5 +6,10 @@ module.exports = new mongoose.Schema ({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    items: [{type: mongoose.Schema.Types.ObjectId, ref: 'Grocery'}]
+    items: [{type: mongoose.Schema.Types.ObjectId, ref: 'Grocery'}],
+    itemqty: {
+        type: Number,
+        required: true,
+        default: 1
+    }
 })

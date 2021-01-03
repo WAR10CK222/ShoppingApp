@@ -3,4 +3,5 @@ export class Grocery {
     "name": string;
     "img": string;
     "price": number;
+    "amount": number;
 }

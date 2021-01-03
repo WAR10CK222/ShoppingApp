@@ -1,7 +1,8 @@
 export class User {
-    _id: string;
-    username: string;
-    email: string;
-    password: string;
-    isAdmin: boolean;
+    "_id": string;
+    "username": string;
+    "email": string;
+    "password": string;
+    "phone": number;
+    "isadmin": boolean;
 }

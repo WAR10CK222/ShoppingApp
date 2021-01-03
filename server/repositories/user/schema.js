@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
  *      username: String required unique
  *      email : String required unique FORMAT : id@domain.com
  *      passoword : String required FORMAT : hash/salt method
+ *      phone : Number
+ *      isadmin : Boolean | Manage Orders
  ******/
 
  module.exports = new mongoose.Schema ({
@@ -27,5 +29,10 @@ const mongoose = require('mongoose');
     password : {
         type: String,
         required: true
+    },
+    isadmin: {
+        type: Boolean,
+        required: true,
+        default: false
     }
  });
