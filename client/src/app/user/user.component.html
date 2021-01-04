@@ -11,7 +11,7 @@
                 <input placeholder="Password" type="password" class="form-control" [(ngModel)]="loginReq.password" id="password" name="password" required>
             </div>
             <div class="col-md-12" style="height:100%;">
-                <button type="submit" routerLink='/grocery' (click)="loginUser()" class="btn btn-primary">Login</button>
+                <button type="submit" (click)="loginUser()" class="btn btn-primary">Login</button>
             </div>
         </form>
         <div class="col-md-6">

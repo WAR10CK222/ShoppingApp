@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from '../shared/user.model';
 import { UserService } from '../shared/user.service';
 
@@ -12,20 +13,22 @@ export class UserComponent implements OnInit {
     email: undefined,
     password: undefined
   };
-  constructor(private userService: UserService) { }
-
+  constructor(private userService: UserService, public router: Router) { }
+  
   ngOnInit() {}
   loginUser() {
     this.userService.loginUser(this.loginReq)
-      .subscribe(status => {
-        if(Object.keys(this.userService.loggedInUser).length === 0){
-          this.userService.loggedInUser = status;
-          // console.log(this.userService.loggedInUser);
-        } else {
-          // console.log("Not working now",this.userService.loggedInUser);
-          return;
+      .subscribe(user => {
+        console.log(this.userService.isLoggedIn);
+        console.log(this.userService.loggedInUser);
+        if(!this.userService.isLoggedIn){
+          this.userService.loggedInUser = user;
+          localStorage.setItem("users" , JSON.stringify(user));
+          this.userService.isLoggedIn = true;
         }
-        
+        console.log(this.userService.isLoggedIn);
+        console.log(this.userService.loggedInUser);
       });
+      this.router.navigate(['/grocery']);
   }
 }

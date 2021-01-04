@@ -7,18 +7,18 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" routerLink='/grocery'><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                    <a class="nav-link" aria-current="page" routerLink='/grocery' routerLinkActive="active"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" routerLink='/login' ><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+                    <a class="nav-link" aria-current="page" routerLink='/login' routerLinkActive="active"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" routerLink='/register' ><i class="fa fa-user" aria-hidden="true"></i> Signup</a>
+                    <a class="nav-link" aria-current="page" routerLink='/register' routerLinkActive="active"><i class="fa fa-user" aria-hidden="true"></i> Signup</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" routerLink='/cart' ><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</a>
+                    <a class="nav-link" aria-current="page" routerLink='/cart' routerLinkActive="active"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" (click)="logout()" routerLink='/grocery'><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
@@ -27,11 +27,3 @@
         </div>
     </div>
 </nav>
-
-<script>
-    $( '.navbar-nav nav-item li a' ).on('click',  function () { 
-        $( '.navbar-nav .nav-item li a' ).find( '.active' ) 
-        .removeClass( 'active' ); 
-        $( this ).parent( 'a' ).addClass( 'active' ); 
-    }); 
-</script>
