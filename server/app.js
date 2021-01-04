@@ -6,7 +6,12 @@ const orderRoutes = require('./controllers/order/routes');
 const userRoutes = require('./controllers/user/routes');
 const groceryRoutes = require('./controllers/grocery/routes');
 
-app.use(cors());
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, HEAD, OPTIONS, PUT, PATCH, DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 //Configured Mongoose and Imported here...
 const mongoose = require('./lib/mongoose');
 

@@ -9,11 +9,15 @@ export class UserService {
   constructor(private webService: WebService) {}
 
   getUsers() {
-    return this.webService.get('api/users');
+    return this.webService.get('api/users/');
   }
 
-  createUser(newUser: User) {
-    return this.webService.post('api/users', newUser);
+  loginUser(loginUser: {}) {
+    return this.webService.post('api/users/login', loginUser);
+  }
+
+  createUser(newUser: {}) {
+    return this.webService.post('api/users/', newUser);
   }
 
   updateUser(userId: string, updatedUser: User) {

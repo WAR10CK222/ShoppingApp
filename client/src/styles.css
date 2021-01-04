@@ -1,2 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/font-awesome/css/font-awesome.css";
+body {
+  background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.8) 26%,
+      rgba(0, 0, 0, 0.8) 100%
+    ),
+    url(https://www.teahub.io/photos/full/317-3173519_autumn-season-yellow-maple-leaves-fall-wallpaper-background.jpg);
+
+  color: white;
+}

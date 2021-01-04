@@ -5,3 +5,18 @@
 .grocery-main-container {
   margin-top: 50px;
 }
+
+.card-img-top {
+  height: 200px;
+}
+
+.card {
+  margin-top: 20px;
+  background: transparent;
+  border-bottom: 1px solid white;
+}
+
+.btn-outline-success {
+  color: #28e68d;
+  border-color: #28e68d;
+}

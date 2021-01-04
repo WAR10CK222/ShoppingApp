@@ -13,6 +13,7 @@ function get(req, res) {
 }
 
 function login(req, res) {
+    //console.log(req); //Get req sent from frontend
     User.findOne({email: req.body.email})
         .then(user => {
             if(!(req.body.email && req.body.password)){
@@ -21,7 +22,8 @@ function login(req, res) {
                 res.status(400).send('Incorrect Password');
             } else {
                 // res.session.user._id;
-                res.status(200).send('Login Succesful');
+                user.password = undefined;
+                res.status(200).send(user);
             }
         })
         .catch(err => res.status(400).send('Unknown Error !!'))
@@ -31,8 +33,10 @@ function postNew(req, res) {
     let hash = hashSync(req.body.password, 10);
     req.body.password = hash;
     (new User(req.body)).save()
-        .then(list => res.status(200).send(list))
-        .catch(err => res.status(400).send('Unknown Error', {err}));
+        .then(list => {
+            list.password = undefined;
+            res.status(200).send(list)})
+        .catch(err => res.status(400).send(err));
 }
 
 function show(req, res) {

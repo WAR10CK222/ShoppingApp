@@ -8,14 +8,15 @@ import { UserService } from '../shared/user.service';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  loggedUsers : any;
+  loginReq = {
+    email: undefined,
+    password: undefined
+  };
   constructor(private userService: UserService) { }
 
-  ngOnInit(): void {
-    this.userService.getUsers()
-      .subscribe(Users => {
-        let temp = Users;
-        this.loggedUsers = temp;
-      });
+  ngOnInit() {}
+  loginUser() {
+    this.userService.loginUser(this.loginReq)
+      .subscribe(status => console.log(status));
   }
 }

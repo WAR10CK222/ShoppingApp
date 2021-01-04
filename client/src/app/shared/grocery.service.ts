@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Grocery } from './grocery.model';
+import { WebService } from '../web.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroceryService {
-  readonly ROOT_URL;
-  constructor(url: string) {
-    this.ROOT_URL = 'https://localhost:3000/api/users';
+  constructor(private webService: WebService) {}
+
+  getGrocery(){
+    return this.webService.get('api/groceries');
+  }
+
+  createGrocery(newGrocery : Grocery){
+    return this.webService.post('api/groceries', newGrocery);
   }
 }
