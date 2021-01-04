@@ -19,7 +19,7 @@
                 <input placeholder="Phone" type="tel" pattern="[0-9]{10}" class="form-control" id="phone" [(ngModel)]="registerUser.phone" name="phone" required>
             </div>
             <div class="col-md-12">
-                <button (click)="postUser()" type="submit" class="btn btn-primary">Sign Up</button>
+                <button (click)="postUser()" routerLink='/grocery' type="submit" class="btn btn-primary">Sign Up</button>
             </div>
         </form>
         <div class="col-md-6">

@@ -18,7 +18,15 @@ export class RegisterComponent implements OnInit {
   
   ngOnInit() {}
   postUser() {
-    this.userService.createUser(this.registerUser)
-      .subscribe();
+    if(Object.keys(this.userService.loggedInUser).length === 0){
+      this.userService.createUser(this.registerUser)
+        .subscribe(user => {
+          this.userService.loggedInUser = user;
+          console.log(this.userService.loggedInUser);
+        });
+    } else {
+      console.log(this.userService.loggedInUser);
+      console.log('Already logged in');
+    }
   }
 }

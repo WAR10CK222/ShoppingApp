@@ -18,8 +18,14 @@ export class UserComponent implements OnInit {
   loginUser() {
     this.userService.loginUser(this.loginReq)
       .subscribe(status => {
-        this.userService.loggedInUser = status;
-        console.log(this.userService.loggedInUser);
+        if(Object.keys(this.userService.loggedInUser).length === 0){
+          this.userService.loggedInUser = status;
+          // console.log(this.userService.loggedInUser);
+        } else {
+          // console.log("Not working now",this.userService.loggedInUser);
+          return;
+        }
+        
       });
   }
 }
