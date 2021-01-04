@@ -12,9 +12,7 @@ export class OrderComponent implements OnInit {
     items: []
   }
 
-  
-
-  constructor(private orderService: OrderService) { }
+  constructor(public orderService: OrderService) { }
 
   ngOnInit(){}
 

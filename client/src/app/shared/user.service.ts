@@ -7,7 +7,7 @@ import { User } from './user.model';
 })
 export class UserService {
   constructor(private webService: WebService) {}
-
+  loggedInUser: any = {};
   getUsers() {
     return this.webService.get('api/users/');
   }

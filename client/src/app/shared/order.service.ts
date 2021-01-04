@@ -10,7 +10,7 @@ export class OrderService {
 
   constructor(private webService: WebService) {}
 
-  sendOrder(newOrder : {}) {
+  sendOrder(newOrder: object) {
     return this.webService.post('api/order', newOrder);
   }
 }

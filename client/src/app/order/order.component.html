@@ -2,61 +2,25 @@
     <div class="mb-3">
         <div class="pt-4 wish-list">
             <h3><i class="fa fa-shopping-cart" aria-hidden="true"></i> Order ID: here_comes_mongo_id</h3>
-            <div class="jumbotron">
             <h6>Order Details: </h6>
 
-            <div class="card mb-3" style="max-width: 500px;">
-                <div class="row g-0">
+            <div *ngFor="let item of orderService.cartItems" class="card mb-3" style="max-width: 500px;">
+                <div style="background-color: black;" class="row g-0">
                     <div class="col-md-2">
                         <div style="padding-top: 50%;" class="card-body">
                             <h5 class="card-title">1.</h5>
                         </div>
                     </div>
                     <div class="col-md-4">
-                    <img style="width: 100%; height: 100%;" src="https://www.connexionfrance.com/var/connexion/storage/images/_aliases/social_network_image/media/images/tomatoes3/977259-1-eng-GB/tomatoes.jpg" alt="...">
+                    <img style="width: 100%; height: 100%;" src="{{item.img}}" alt="...">
                     </div>
                     <div class="col-md-4">
                         <div class="card-body">
-                            <h5 class="card-title">Tomato</h5>
+                            <h5 class="card-title">{{item.name}}</h5>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card mb-3" style="max-width: 500px;">
-                <div class="row g-0">
-                    <div class="col-md-2">
-                        <div style="padding-top: 50%;" class="card-body">
-                            <h5 class="card-title">2.</h5>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                    <img style="width: 100%; height: 100%;" src="https://post.healthline.com/wp-content/uploads/2020/09/Do_Apples_Affect_Diabetes_and_Blood_Sugar_Levels-732x549-thumbnail-1-732x549.jpg" alt="...">
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Apples</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-3" style="max-width: 500px;">
-                <div class="row g-0">
-                    <div class="col-md-2">
-                        <div style="padding-top: 50%;" class="card-body">
-                            <h5 class="card-title">3.</h5>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                    <img style="width: 100%; height: 100%;" src="https://cosmosmagazine.com/wp-content/uploads/2020/02/100118_Debunked_01.jpg" alt="...">
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Bananas</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
+            </div>      
         </div>
     </div>     
 </div>

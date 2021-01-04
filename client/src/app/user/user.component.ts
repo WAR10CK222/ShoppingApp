@@ -17,6 +17,9 @@ export class UserComponent implements OnInit {
   ngOnInit() {}
   loginUser() {
     this.userService.loginUser(this.loginReq)
-      .subscribe(status => console.log(status));
+      .subscribe(status => {
+        this.userService.loggedInUser = status;
+        console.log(this.userService.loggedInUser);
+      });
   }
 }
