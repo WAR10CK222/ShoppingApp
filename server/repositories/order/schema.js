@@ -9,7 +9,7 @@ module.exports = new mongoose.Schema ({
     items: [{type: mongoose.Schema.Types.ObjectId, ref: 'Grocery'}],
     itemqty: {
         type: Number,
-        required: true,
+        required: false,
         default: 1
     }
 })
