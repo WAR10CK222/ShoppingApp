@@ -14,12 +14,26 @@ export class OrderComponent implements OnInit {
   }
   
   user = "";
+  totalAmount = 0;
+  emptyCart = "";
 
   constructor(public orderService: OrderService, public router: Router) { }
 
   ngOnInit(){
+    if(this.orderService.cartItems.length === 0){
+      window.alert('Empty Cart !!');
+      this.router.navigate(['/grocery']);
+    }
+    this.emptyCart = "";
+    this.findTotal();
     if(localStorage['users'] !== undefined){
       this.user = JSON.parse(localStorage['users']).username
+    }
+  }
+
+  findTotal() {
+    for(let i = 0; i < this.orderService.cartItems.length; i++){
+      this.totalAmount+=this.orderService.cartItems[i]['price'];
     }
   }
 
@@ -38,7 +52,7 @@ export class OrderComponent implements OnInit {
         for(let i = 0; i < this.orderService.cartItems.length; i++){
           this.newOrder.items.push(this.orderService.cartItems[i]['_id']);
         }
-        console.log(this.newOrder);
+        // console.log(this.newOrder);
         this.orderService.sendOrder(this.newOrder)
           .subscribe(result => console.log(result) ); 
       }
@@ -47,6 +61,8 @@ export class OrderComponent implements OnInit {
 
   clearOrder(){
     this.orderService.cartItems = [];
+    this.totalAmount = 0;
+    this.emptyCart = "Cart is Empty";
   }
 
 }

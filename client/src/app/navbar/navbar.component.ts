@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { OrderService } from '../shared/order.service';
 import { UserService } from '../shared/user.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { UserService } from '../shared/user.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  constructor(public userService: UserService, public router: Router) { }
+  constructor(public userService: UserService, public router: Router, public orderService : OrderService) { }
   isLoggedIn : boolean = false;
   ngOnInit(){
     this.isLoggedIn = this.userService.isLoggedIn;
@@ -36,6 +37,7 @@ export class NavbarComponent implements OnInit {
       this.userService.loggedInUser = {};
       localStorage.removeItem("users");
       this.userService.isLoggedIn = false;
+      this.orderService.cartItems = [];
       window.alert('Logged you out !!');
       // console.log(this.userService.isLoggedIn);
       // console.log(this.userService.loggedInUser);
