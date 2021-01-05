@@ -9,7 +9,7 @@ function get(req, res) {
             }
             res.status(200).send(lists);
         })
-        .catch(err => res.status(400).send('Unknown Error', {err}));
+        .catch(err => res.status(400).send(err));
 }
 
 function login(req, res) {
@@ -45,7 +45,7 @@ function show(req, res) {
             foundUser.password = undefined;
             res.status(200).send(foundUser)
         })
-        .catch(err => res.status(400).send('Unknown Error', {err}));
+        .catch(err => res.status(400).send(err));
 }
 
 function update(req, res) {
@@ -61,7 +61,7 @@ function update(req, res) {
 function remove(req, res) {
     User.findByIdAndDelete(req.params.id)
         .then(deletedUser => res.status(200).send({deletedUser}))
-        .catch(err => res.status(400).send('Unknown Error', {err}));
+        .catch(err => res.status(400).send(err));
 }
 
 module.exports = {

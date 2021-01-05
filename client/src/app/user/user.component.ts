@@ -17,18 +17,27 @@ export class UserComponent implements OnInit {
   
   ngOnInit() {}
   loginUser() {
-    this.userService.loginUser(this.loginReq)
-      .subscribe(user => {
-        console.log(this.userService.isLoggedIn);
-        console.log(this.userService.loggedInUser);
-        if(!this.userService.isLoggedIn){
-          this.userService.loggedInUser = user;
-          localStorage.setItem("users" , JSON.stringify(user));
-          this.userService.isLoggedIn = true;
-        }
-        console.log(this.userService.isLoggedIn);
-        console.log(this.userService.loggedInUser);
-      });
-      this.router.navigate(['/grocery']);
+    if(!(this.loginReq.email === undefined || this.loginReq.password === undefined)){
+      if(!this.userService.isLoggedIn){
+        this.userService.loginUser(this.loginReq)
+          .subscribe(user => {
+            // console.log(this.userService.isLoggedIn);
+            // console.log(this.userService.loggedInUser);
+              this.userService.loggedInUser = user;
+              localStorage.setItem("users" , JSON.stringify(user)); 
+              this.userService.isLoggedIn = true;
+              window.alert('Login Successful !!');
+              this.router.navigate(['/grocery']);
+            // console.log(this.userService.isLoggedIn);
+            // console.log(this.userService.loggedInUser);
+          });
+      } else {
+        window.alert('Already Logged in!!');
+        this.router.navigate(['/grocery']);
+      }
+    } else {
+      window.alert('Required Credentials not provided !!');
+      this.router.navigate(['/login']);
+    }
   }
 }

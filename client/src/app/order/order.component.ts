@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { OrderService } from '../shared/order.service';
 
 @Component({
@@ -9,20 +10,43 @@ import { OrderService } from '../shared/order.service';
 export class OrderComponent implements OnInit {
   newOrder = {
     userId: undefined,
-    items: []
+    items : [] as any
+  }
+  
+  user = "";
+
+  constructor(public orderService: OrderService, public router: Router) { }
+
+  ngOnInit(){
+    if(localStorage['users'] !== undefined){
+      this.user = JSON.parse(localStorage['users']).username
+    }
   }
 
-  constructor(public orderService: OrderService) { }
-
-  ngOnInit(){}
-
   postOrder(){
-    this.orderService.sendOrder(this.newOrder)
-      .subscribe(result => console.log(result) );
+    if(this.orderService.cartItems.length === 0){
+      window.alert('First Add some items !!');
+      this.router.navigate(['/grocery']);
+    } else {
+      if(!localStorage['users']) {
+        window.alert('Login First');
+        this.router.navigate(['/login']);
+      }
+      else {
+        window.alert('Order Sent Succesfully');
+        this.newOrder['userId'] = JSON.parse(localStorage['users'])['_id'];
+        for(let i = 0; i < this.orderService.cartItems.length; i++){
+          this.newOrder.items.push(this.orderService.cartItems[i]['_id']);
+        }
+        console.log(this.newOrder);
+        this.orderService.sendOrder(this.newOrder)
+          .subscribe(result => console.log(result) ); 
+      }
+    }
   }
 
   clearOrder(){
-    this.newOrder.items = [];
+    this.orderService.cartItems = [];
   }
 
 }

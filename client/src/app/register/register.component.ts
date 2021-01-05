@@ -19,18 +19,25 @@ export class RegisterComponent implements OnInit {
   
   ngOnInit() {}
   postUser() {
-    if(!this.userService.isLoggedIn){
-      this.userService.createUser(this.registerUser)
-        .subscribe(user => {
-          this.userService.loggedInUser = user;
-          localStorage.setItem("users" , JSON.stringify(user));
-          this.userService.isLoggedIn = true;
-          // console.log(this.userService.loggedInUser);
-        });
+    if(!(this.registerUser.email === undefined || this.registerUser.password === undefined || this.registerUser.phone === undefined || this.registerUser.phone === undefined)){
+      if(!this.userService.isLoggedIn){
+        this.userService.createUser(this.registerUser)
+          .subscribe((user) => {
+            this.userService.loggedInUser = user;
+            localStorage.setItem("users" , JSON.stringify(user));
+            this.userService.isLoggedIn = true;
+            window.alert('Registered Successful !!');
+            // console.log(this.userService.loggedInUser);
+            this.router.navigate(['/grocery']);
+          });
+      } else {
+        // console.log(this.userService.loggedInUser);
+        window.alert('Already logged in');
+        this.router.navigate(['/grocery']);
+      }
     } else {
-      // console.log(this.userService.loggedInUser);
-      console.log('Already logged in');
+      window.alert('Required Credentials not provided');
+      this.router.navigate(['/register']);
     }
-    this.router.navigate(['/grocery']);
   }
 }

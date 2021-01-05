@@ -13,7 +13,16 @@
 .card {
   margin-top: 20px;
   background: transparent;
-  border-bottom: 1px solid white;
+  border: none;
+}
+
+.card-body {
+  background-color: rgba(0, 0, 0, 0.8);
+  align-content: space-between;
+}
+
+.btn {
+  width: 100%;
 }
 
 .btn-outline-success {

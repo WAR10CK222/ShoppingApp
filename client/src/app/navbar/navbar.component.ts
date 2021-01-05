@@ -13,16 +13,36 @@ export class NavbarComponent implements OnInit {
   ngOnInit(){
     this.isLoggedIn = this.userService.isLoggedIn;
   }
+  hideThumbnail(){
+    if(localStorage.getItem("users") === null){
+        return true;
+    } else {
+      return false;
+    }
+  }
+
+  showThumbnail(){
+    if(localStorage.getItem("users") !== null){
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   logout() {
-    // console.log(this.userService.isLoggedIn);
-    // console.log(this.userService.loggedInUser);
-    this.userService.loggedInUser = {};
-    localStorage.removeItem("users");
-    this.userService.isLoggedIn = false;
-    // console.log(this.userService.isLoggedIn);
-    // console.log(this.userService.loggedInUser);
-    this.router.navigate(['/grocery']);
+    if(localStorage.getItem("users")){
+      // console.log(this.userService.isLoggedIn);
+      // console.log(this.userService.loggedInUser);
+      this.userService.loggedInUser = {};
+      localStorage.removeItem("users");
+      this.userService.isLoggedIn = false;
+      window.alert('Logged you out !!');
+      // console.log(this.userService.isLoggedIn);
+      // console.log(this.userService.loggedInUser);
+      this.router.navigate(['/grocery']);
+    } else {
+      window.alert('Login First ;)');
+    }
   }
 
 }

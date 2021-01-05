@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" routerLink='/grocery' ><i class="fa fa-usd" aria-hidden="true"></i>Mart</a>
+        <a class="navbar-brand" routerLink='/grocery' ><i class="fa fa-inr" aria-hidden="true"></i> MART</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -12,18 +12,22 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" routerLink='/login' routerLinkActive="active"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+                    <a class="nav-link" [class.hidden]="showThumbnail()" aria-current="page" routerLink='/login' routerLinkActive="active"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" routerLink='/register' routerLinkActive="active"><i class="fa fa-user" aria-hidden="true"></i> Signup</a>
+                    <a class="nav-link" [class.hidden]="showThumbnail()" aria-current="page" routerLink='/register' routerLinkActive="active"><i class="fa fa-user" aria-hidden="true"></i> Signup</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" routerLink='/cart' routerLinkActive="active"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" (click)="logout()" routerLink='/grocery'><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                    <a class="nav-link" [class.hidden]="hideThumbnail()" aria-current="page" (click)="logout()" routerLink='/grocery'><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
+<script>
+    
+</script>
