@@ -12,3 +12,18 @@ img {
   height: 200px;
   border-radius: 50%;
 }
+
+.list-group {
+  border-bottom: 2px solid white;
+  margin-top: 1%;
+}
+
+.list-group-item {
+  background-color: transparent;
+  color: white;
+}
+
+.list-group-item:hover {
+  background-color: transparent;
+  color: white;
+}

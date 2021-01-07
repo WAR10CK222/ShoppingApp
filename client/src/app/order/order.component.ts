@@ -24,7 +24,10 @@ export class OrderComponent implements OnInit {
   ngOnInit(){
     localStorage['cart'] = JSON.stringify(this.orderService.cartItems);
     if(this.orderService.cartItems.length === 0){
-      Swal.fire('Empty Cart !!', 'error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Empty Cart'
+      });
       this.router.navigate(['/grocery']);
     }
     this.emptyCart = "";
@@ -42,11 +45,17 @@ export class OrderComponent implements OnInit {
 
   postOrder(){
     if(this.orderService.cartItems.length === 0){
-      Swal.fire('First Add some items !!', 'error');
+      Swal.fire({
+        icon: 'error',
+        text: 'First Add some items'
+      });
       this.router.navigate(['/grocery']);
     } else {
       if(!localStorage['users']) {
-        Swal.fire('Login First', 'error');
+        Swal.fire({
+          icon: 'error',
+          text: 'Login First'
+        });
         this.router.navigate(['/login']);
       }
       else {

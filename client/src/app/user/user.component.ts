@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { User } from '../shared/user.model';
 import { UserService } from '../shared/user.service';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user',
@@ -11,12 +12,34 @@ import Swal from 'sweetalert2';
 })
 export class UserComponent implements OnInit {
   loginReq = {
-    email: undefined,
-    password: undefined
+    email : undefined,
+    password :  undefined
   };
-  constructor(private userService: UserService, public router: Router) { }
+
+  userForm: FormGroup;
+  submitted = false;
+  constructor(private userService: UserService, public router: Router, private formBuilder: FormBuilder) {}
   
-  ngOnInit() {}
+  ngOnInit() {
+    this.userForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.pattern("[^ @]*@[^ @]*")]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]]
+    });
+  }
+
+  get f() { return this.userForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+    console.log('submitted');
+    this.loginUser();
+
+    // stop here if form is invalid
+    if (this.userForm.invalid) {
+        return;
+    }
+  }
+  
   loginUser() {
     if(!(this.loginReq.email === undefined || this.loginReq.password === undefined)){
       if(!this.userService.isLoggedIn){
@@ -32,7 +55,10 @@ export class UserComponent implements OnInit {
               this.router.navigate(['/grocery']);
           }, error => {
             err = error;
-            Swal.fire(err.error.message, 'error');
+            Swal.fire({
+              icon: 'error',
+              text: err.error.message
+            });
           });
       } else {
         Swal.fire('Already Logged in!!');
@@ -40,7 +66,10 @@ export class UserComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     } else {
-      Swal.fire('Required Credentials not provided !!', 'error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Required Credentials not provided'
+      });
       this.router.navigate(['/login']);
     }
   }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { User } from '../shared/user.model';
 import { UserService } from '../shared/user.service';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +11,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  constructor(private userService: UserService, public router: Router) { }
+  registerForm: FormGroup;
+  submitted = false;
+  constructor(private userService: UserService, public router: Router, private formBuilder: FormBuilder) { }
   registerUser = {
     username: undefined,
     email: undefined,
@@ -18,7 +21,28 @@ export class RegisterComponent implements OnInit {
     phone: undefined
   }
   
-  ngOnInit() {}
+  ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      username: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
+      email: ['', [Validators.required, Validators.pattern("[^ @]*@[^ @]*")]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
+      phone: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]]
+    });
+  }
+
+  get f() { return this.registerForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+    console.log('submitted');
+    this.postUser();
+
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+        return;
+    }
+  }
+
   postUser() {
     if(!(this.registerUser.email === undefined || this.registerUser.password === undefined || this.registerUser.phone === undefined || this.registerUser.phone === undefined)){
       if(!this.userService.isLoggedIn){
@@ -35,7 +59,10 @@ export class RegisterComponent implements OnInit {
             this.router.navigate(['/grocery']);
           }, error => {
             err : error;
-            Swal.fire(err.error.message, 'error');
+            Swal.fire({
+              icon: 'error',
+              text: err.error.message
+            });
           });
       } else {
         // console.log(this.userService.loggedInUser);
@@ -43,7 +70,10 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/grocery']);
       }
     } else {
-      Swal.fire('Required Credentials not provided', 'error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Required Credentials not provided'
+      });
       this.router.navigate(['/register']);
     }
   }

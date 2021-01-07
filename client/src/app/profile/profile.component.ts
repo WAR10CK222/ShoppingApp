@@ -14,10 +14,14 @@ export class ProfileComponent implements OnInit {
   constructor(private userService : UserService, private router : Router, private orderService : OrderService) { }
 
   user : any;
-  userOrder : Object = {};
+  userOrder : any;
+  err : any;
   ngOnInit(): void {
     if(!this.userService.isLoggedIn === true){
-      Swal.fire('Login First !!', 'error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Login First'
+      });
       this.router.navigate(['/login']);
     } else {
       this.user = JSON.parse(localStorage['users']);
@@ -26,7 +30,10 @@ export class ProfileComponent implements OnInit {
       this.orderService.loadOrder(this.user._id).subscribe(orders => {
         console.log(orders);
         this.userOrder = orders;
-        console.log(this.userOrder);
+        //console.log(this.userOrder['foundOrders']);
+      }, error => {
+        this.err = error;
+        console.log(this.err.message);
       }); 
     }
   }

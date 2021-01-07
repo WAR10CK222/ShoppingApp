@@ -58,14 +58,14 @@ function update(req, res) {
         req.body.password = hash;
     }
     User.findByIdAndUpdate(req.params.id, {$set : req.body}, {new : true})
-        .then(updatedUser => res.status(200).send(updatedUser))
-        .catch(err => res.status(400).send('Unknown Error', {err}));
+        .then(updatedUser => res.status(200).send({ message: 'User Successfully updated', updatedUser : updatedUser}))
+        .catch(err => res.status(400).send({ message : 'Unknown Error', error : err}));
 }
 
 function remove(req, res) {
     User.findByIdAndDelete(req.params.id)
-        .then(deletedUser => res.status(200).send({deletedUser}))
-        .catch(err => res.status(400).send(err));
+        .then(deletedUser => res.status(200).send({ message: 'User Deleted Successfully', deletedUser : deletedUser}))
+        .catch(err => res.status(400).send({ message : 'Unknown Error', error : err}));
 }
 
 module.exports = {

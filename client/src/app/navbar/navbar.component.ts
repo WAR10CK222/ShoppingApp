@@ -44,7 +44,10 @@ export class NavbarComponent implements OnInit {
       this.userService.isLoggedIn = false;
       this.orderService.cartItems = [];
       localStorage['cart'] = "";
-      Swal.fire('Logged you out !!', 'error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Logged you out'
+      });
       // console.log(this.userService.isLoggedIn);
       // console.log(this.userService.loggedInUser);
       this.router.navigate(['/grocery']);
