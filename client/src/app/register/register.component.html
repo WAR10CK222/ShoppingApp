@@ -14,12 +14,16 @@
                 <label for="password" class="form-label">Password</label>
                 <input placeholder="Password" type="password" class="form-control" id="password" [(ngModel)]="registerUser.password" name="password" required>
             </div>
+            <div class="col-md-12" style="margin-top: 0;"><input type="checkbox" onclick="showPassword()"> Show Password</div>
             <div class="col-md-12">
                 <label for="phone" class="form-label">Phone</label>
                 <input placeholder="Phone" type="tel" pattern="[0-9]{10}" class="form-control" id="phone" [(ngModel)]="registerUser.phone" name="phone" required>
             </div>
             <div class="col-md-12">
                 <button (click)="postUser()" type="submit" class="btn btn-primary">Sign Up</button>
+            </div>
+            <div class="col-md-12">
+                Already have an account ? <a routerLink='/login' style="text-decoration: none;">LOG IN</a>
             </div>
         </form>
         <div class="col-md-6">

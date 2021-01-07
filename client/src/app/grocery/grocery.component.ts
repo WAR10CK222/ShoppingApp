@@ -21,7 +21,7 @@ title="List of Groceries";
 //     {"name":"Kiwis", "_id":1233, "price":3, "quantity":2, "image_url": 'https://images-na.ssl-images-amazon.com/images/I/81vo%2B9JNpIL._SL1500_.jpg'}
 //   ];
 loggedGroceries: any;
-  constructor(private groceryService: GroceryService, private _route: ActivatedRoute, private _router: Router, private orderService : OrderService) { }
+  constructor(private groceryService: GroceryService, private _route: ActivatedRoute, private _router: Router, public orderService : OrderService) { }
   
   ngOnInit() {
     this.groceryService.getGrocery()

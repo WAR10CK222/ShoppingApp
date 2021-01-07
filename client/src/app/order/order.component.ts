@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderService } from '../shared/order.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-order',
@@ -16,12 +17,14 @@ export class OrderComponent implements OnInit {
   user = "";
   totalAmount = 0;
   emptyCart = "";
+  sentOrder: any;
 
   constructor(public orderService: OrderService, public router: Router) { }
 
   ngOnInit(){
+    localStorage['cart'] = JSON.stringify(this.orderService.cartItems);
     if(this.orderService.cartItems.length === 0){
-      window.alert('Empty Cart !!');
+      Swal.fire('Empty Cart !!', 'error');
       this.router.navigate(['/grocery']);
     }
     this.emptyCart = "";
@@ -39,22 +42,26 @@ export class OrderComponent implements OnInit {
 
   postOrder(){
     if(this.orderService.cartItems.length === 0){
-      window.alert('First Add some items !!');
+      Swal.fire('First Add some items !!', 'error');
       this.router.navigate(['/grocery']);
     } else {
       if(!localStorage['users']) {
-        window.alert('Login First');
+        Swal.fire('Login First', 'error');
         this.router.navigate(['/login']);
       }
       else {
-        window.alert('Order Sent Succesfully');
+        Swal.fire('Order Sent Succesfully');
         this.newOrder['userId'] = JSON.parse(localStorage['users'])['_id'];
         for(let i = 0; i < this.orderService.cartItems.length; i++){
           this.newOrder.items.push(this.orderService.cartItems[i]['_id']);
         }
         // console.log(this.newOrder);
         this.orderService.sendOrder(this.newOrder)
-          .subscribe(result => console.log(result) ); 
+          .subscribe(result => {
+            this.sentOrder = result;
+            console.log(this.sentOrder.loggedOrder);
+            Swal.fire(this.sentOrder.message);
+          }); 
       }
     }
   }
@@ -63,6 +70,7 @@ export class OrderComponent implements OnInit {
     this.orderService.cartItems = [];
     this.totalAmount = 0;
     this.emptyCart = "Cart is Empty";
+    localStorage['cart'] = "";
   }
 
 }

@@ -3,13 +3,14 @@
     <div class="container-fluid grocery-main-container">
         <div class="row grocery-main-row">
             <!-- Every Grocery Item -->
-            <div *ngFor="let grocery of loggedGroceries" class="col-lg-3 col-md-3 col-sm-3 col-xs-12 grocery-main-row-item card">
+            <div *ngFor="let grocery of loggedGroceries" [ngSwitch]="orderService.cartItems.includes(grocery)" class="col-lg-3 col-md-3 col-sm-3 col-xs-12 grocery-main-row-item card">
                 <img class="card-img-top" src="{{grocery.img}}" alt="">
                 <div class="card-body">
                     <h3 class="card-title">{{grocery.name}}</h3>
                     <p class="card-text" style="margin: 0;">Price : {{grocery.price}}</p>
-                    <p class="card-text">Amount : {{grocery.amount}}</p>
-                    <a (click)="addToCart(grocery)" class="btn btn-outline-success">Add to Cart</a>
+                    <p class="card-text">Quantity : {{grocery.amount}}</p>
+                    <a (click)="addToCart(grocery)" class="btn btn-outline-success" *ngSwitchDefault>Add to Cart</a>
+                    <a (click)="addToCart(grocery)" class="btn btn-outline-success disabled" *ngSwitchCase="true">Add to Cart</a>
                 </div>
             </div>
         </div>

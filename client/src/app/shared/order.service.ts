@@ -9,7 +9,9 @@ export class OrderService {
   cartItems: any = [];
 
   constructor(private webService: WebService) {}
-
+  loadOrder(userid: string) {
+    return this.webService.get(`api/order/find/${userid}`);
+  }
   sendOrder(newOrder: object) {
     return this.webService.post('api/order', newOrder);
   }

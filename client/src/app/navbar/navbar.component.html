@@ -18,6 +18,9 @@
                     <a class="nav-link" [class.hidden]="showThumbnail()" aria-current="page" routerLink='/register' routerLinkActive="active"><i class="fa fa-user" aria-hidden="true"></i> Signup</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" [class.hidden]="hideThumbnail()" aria-current="page" routerLink='/profile'><i class="fa fa-user-circle-o" aria-hidden="true"></i> {{username}}</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" aria-current="page" routerLink='/cart' routerLinkActive="active"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</a>
                 </li>
                 <li class="nav-item">

@@ -17,26 +17,30 @@ function login(req, res) {
     User.findOne({email: req.body.email})
         .then(user => {
             if(!(req.body.email && req.body.password)){
-                res.status(400).send('Email or Password is not provided!');
+                res.status(400).send({ message: "Email or Password is not provided!", err : {}});
             } if(!compareSync(req.body.password, user.password)){
-                res.status(400).send('Incorrect Password');
+                res.status(400).send({ message: "Incorrect Password", err : {}}); 
             } else {
                 // res.session.user._id;
                 user.password = undefined;
-                res.status(200).send(user);
+                res.status(200).send({message: "Logged User Successfully !!", user : user});
             }
         })
-        .catch(err => res.status(400).send('Unknown Error !!'))
+        .catch(err => res.status(400).send({ message: "Server Error", error : err }))
 }
 
 function postNew(req, res) {
     let hash = hashSync(req.body.password, 10);
     req.body.password = hash;
-    (new User(req.body)).save()
-        .then(list => {
-            list.password = undefined;
-            res.status(200).send(list)})
-        .catch(err => res.status(400).send(err));
+    if(!(req.body.email && req.body.password && req.body.phone && req.body.username)){
+        res.status(400).send({ message: "Credentials are not provided!", err : {}});
+    } else {
+        (new User(req.body)).save()
+            .then(user => {
+                user.password = undefined;
+                res.status(200).send({message: "Registered User Successfully !!", user : user})})
+            .catch(err => res.status(400).send({ message: "Server Error", error : err}));
+    }
 }
 
 function show(req, res) {
