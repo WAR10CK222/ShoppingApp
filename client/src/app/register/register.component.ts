@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
   
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
+      username: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]],
       email: ['', [Validators.required, Validators.pattern("[^ @]*@[^ @]*")]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
       phone: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]]
@@ -34,12 +34,15 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log('submitted');
-    this.postUser();
+    
 
     // stop here if form is invalid
     if (this.registerForm.invalid) {
         return;
+    }
+    if (this.registerForm.valid) {
+      console.log('submitted');
+      this.postUser();
     }
   }
 
@@ -54,6 +57,7 @@ export class RegisterComponent implements OnInit {
             this.userService.loggedInUser = usr.user;
             localStorage.setItem("users" , JSON.stringify(usr.user));
             this.userService.isLoggedIn = true;
+            localStorage.setItem("isLoggedIn", JSON.stringify(true));
             Swal.fire(usr.message);
             // console.log(this.userService.loggedInUser);
             this.router.navigate(['/grocery']);

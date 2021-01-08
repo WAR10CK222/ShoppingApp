@@ -24,6 +24,7 @@ loggedGroceries: any;
   constructor(private groceryService: GroceryService, private _route: ActivatedRoute, private _router: Router, public orderService : OrderService) { }
   
   ngOnInit() {
+    localStorage.setItem('cart', "[]");
     this.groceryService.getGrocery()
       .subscribe((groceries => {
         let temp = groceries;
@@ -34,6 +35,7 @@ loggedGroceries: any;
   addToCart(grocery: any){
     // this._router.navigate(['/cart', grocery]);
     this.orderService.cartItems.push(grocery);
+    localStorage['cart'] = JSON.stringify(this.orderService.cartItems);
     console.log("Added to Cartitems: ",this.orderService.cartItems);
   };
 }

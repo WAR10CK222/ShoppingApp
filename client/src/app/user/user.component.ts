@@ -31,13 +31,18 @@ export class UserComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log('submitted');
-    this.loginUser();
+    
+    if (this.userForm.invalid) {
+      return;
+    }
+    if (this.userForm.valid) {
+      console.log('submitted');
+      this.loginUser();
+    }
+    
 
     // stop here if form is invalid
-    if (this.userForm.invalid) {
-        return;
-    }
+    
   }
   
   loginUser() {
@@ -51,6 +56,7 @@ export class UserComponent implements OnInit {
               this.userService.loggedInUser = usr.user;
               localStorage.setItem("users" , JSON.stringify(usr.user)); 
               this.userService.isLoggedIn = true;
+              localStorage.setItem("isLoggedIn", JSON.stringify(true));
               Swal.fire(usr.message);
               this.router.navigate(['/grocery']);
           }, error => {

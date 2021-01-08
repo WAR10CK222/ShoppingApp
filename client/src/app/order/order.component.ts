@@ -22,15 +22,18 @@ export class OrderComponent implements OnInit {
   constructor(public orderService: OrderService, public router: Router) { }
 
   ngOnInit(){
-    localStorage['cart'] = JSON.stringify(this.orderService.cartItems);
-    if(this.orderService.cartItems.length === 0){
-      Swal.fire({
-        icon: 'error',
-        text: 'Empty Cart'
-      });
-      this.router.navigate(['/grocery']);
+    this.orderService.cartItems = JSON.parse(localStorage['cart']);
+    console.log(this.orderService.cartItems);
+    if(!this.orderService.cartItems.length){
+      this.emptyCart = "Cart is Empty";
+      this.totalAmount = 0;
+      // Swal.fire({
+      //   icon: 'error',
+      //   text: 'Empty Cart'
+      // });
+      // this.router.navigate(['/grocery']);
     }
-    this.emptyCart = "";
+    //this.emptyCart = "";
     this.findTotal();
     if(localStorage['users'] !== undefined){
       this.user = JSON.parse(localStorage['users']).username
@@ -79,7 +82,7 @@ export class OrderComponent implements OnInit {
     this.orderService.cartItems = [];
     this.totalAmount = 0;
     this.emptyCart = "Cart is Empty";
-    localStorage['cart'] = "";
+    localStorage['cart'] = "[]";
   }
 
 }

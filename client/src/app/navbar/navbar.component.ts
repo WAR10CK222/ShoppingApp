@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit {
   isLoggedIn : boolean = false;
   username : string = "";
   ngOnInit(){
+    this.userService.isLoggedIn = JSON.parse(localStorage['isLoggedIn']);
     this.isLoggedIn = this.userService.isLoggedIn;
   }
   hideThumbnail(){
@@ -42,10 +43,11 @@ export class NavbarComponent implements OnInit {
       localStorage.removeItem("users");
       
       this.userService.isLoggedIn = false;
-      this.orderService.cartItems = [];
-      localStorage['cart'] = "";
+      localStorage['isLoggedIn'] = "false";
+      //this.orderService.cartItems = [];
+      //localStorage['cart'] = "[]";
       Swal.fire({
-        icon: 'error',
+        icon: 'success',
         text: 'Logged you out'
       });
       // console.log(this.userService.isLoggedIn);
