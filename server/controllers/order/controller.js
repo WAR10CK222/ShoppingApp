@@ -30,7 +30,7 @@ function findUserOrder(req, res) {
 
 function postNew(req, res) {
     (new Order(req.body)).save()
-        .then(list => res.status(200).send({message : "Order Sent: ", loggedOrder: loggedOrder}))
+        .then(loggedOrder => res.status(200).send({message : "Order Sent: ", loggedOrder: loggedOrder}))
         .catch(err => res.status(400).send({ message: 'Unknown Error', error: err}));
 }
 

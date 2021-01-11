@@ -11,10 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  loginReq = {
-    email : undefined,
-    password :  undefined
-  };
+  loginReq : Object = {};
 
   userForm: FormGroup;
   submitted = false;
@@ -37,6 +34,9 @@ export class UserComponent implements OnInit {
     }
     if (this.userForm.valid) {
       console.log('submitted');
+      //console.log(this.userForm.value);
+      this.loginReq = this.userForm.value;
+      //console.log('LoginReq :', this.loginReq);
       this.loginUser();
     }
     
@@ -46,37 +46,29 @@ export class UserComponent implements OnInit {
   }
   
   loginUser() {
-    if(!(this.loginReq.email === undefined || this.loginReq.password === undefined)){
-      if(!this.userService.isLoggedIn){
-        let usr : any;
-        let err : any;
-        this.userService.loginUser(this.loginReq)
-          .subscribe(user => {
-              usr = user;
-              this.userService.loggedInUser = usr.user;
-              localStorage.setItem("users" , JSON.stringify(usr.user)); 
-              this.userService.isLoggedIn = true;
-              localStorage.setItem("isLoggedIn", JSON.stringify(true));
-              Swal.fire(usr.message);
-              this.router.navigate(['/grocery']);
-          }, error => {
-            err = error;
-            Swal.fire({
-              icon: 'error',
-              text: err.error.message
-            });
+    
+    if(!this.userService.isLoggedIn){
+      let usr : any;
+      let err : any;
+      this.userService.loginUser(this.loginReq)
+        .subscribe(user => {
+            usr = user;
+            this.userService.loggedInUser = usr.user;
+            localStorage.setItem("users" , JSON.stringify(usr.user)); 
+            this.userService.isLoggedIn = true;
+            localStorage.setItem("isLoggedIn", JSON.stringify(true));
+            Swal.fire(usr.message);
+            this.router.navigate(['/grocery']);
+        }, error => {
+          err = error;
+          Swal.fire({
+            icon: 'error',
+            text: err.error.message
           });
-      } else {
-        Swal.fire('Already Logged in!!');
-        this.router.navigate(['/grocery']);
-        this.router.navigate(['/login']);
-      }
+        });
     } else {
-      Swal.fire({
-        icon: 'error',
-        text: 'Required Credentials not provided'
-      });
-      this.router.navigate(['/login']);
-    }
+      Swal.fire('Already Logged in!!');
+      this.router.navigate(['/grocery']);
+    }  
   }
 }

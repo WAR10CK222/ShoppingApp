@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { EditprofileComponent } from './editprofile/editprofile.component';
 import { GroceryComponent } from './grocery/grocery.component';
 import { OrderComponent } from './order/order.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'grocery', component: GroceryComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'profile', component: ProfileComponent},
+  {path: 'profile/edit', component: EditprofileComponent},
   {path: '', redirectTo: '/grocery', pathMatch: 'full'}
 ];
 

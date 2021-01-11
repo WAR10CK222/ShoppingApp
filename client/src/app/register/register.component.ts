@@ -14,12 +14,7 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
   constructor(private userService: UserService, public router: Router, private formBuilder: FormBuilder) { }
-  registerUser = {
-    username: undefined,
-    email: undefined,
-    password: undefined,
-    phone: undefined
-  }
+  registerUser : Object = {};
   
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -42,43 +37,37 @@ export class RegisterComponent implements OnInit {
     }
     if (this.registerForm.valid) {
       console.log('submitted');
+      this.registerUser = this.registerForm.value;
+      //console.log(this.registerUser);
       this.postUser();
     }
   }
 
   postUser() {
-    if(!(this.registerUser.email === undefined || this.registerUser.password === undefined || this.registerUser.phone === undefined || this.registerUser.phone === undefined)){
-      if(!this.userService.isLoggedIn){
-        let usr : any;
-        let err : any;
-        this.userService.createUser(this.registerUser)
-          .subscribe((user) => {
-            usr = user;
-            this.userService.loggedInUser = usr.user;
-            localStorage.setItem("users" , JSON.stringify(usr.user));
-            this.userService.isLoggedIn = true;
-            localStorage.setItem("isLoggedIn", JSON.stringify(true));
-            Swal.fire(usr.message);
-            // console.log(this.userService.loggedInUser);
-            this.router.navigate(['/grocery']);
-          }, error => {
-            err : error;
-            Swal.fire({
-              icon: 'error',
-              text: err.error.message
-            });
+    if(!this.userService.isLoggedIn){
+      let usr : any;
+      let err : any;
+      this.userService.createUser(this.registerUser)
+        .subscribe((user) => {
+          usr = user;
+          this.userService.loggedInUser = usr.user;
+          localStorage.setItem("users" , JSON.stringify(usr.user));
+          this.userService.isLoggedIn = true;
+          localStorage.setItem("isLoggedIn", JSON.stringify(true));
+          Swal.fire(usr.message);
+          // console.log(this.userService.loggedInUser);
+          this.router.navigate(['/grocery']);
+        }, error => {
+          err : error;
+          Swal.fire({
+            icon: 'error',
+            text: err.error.message
           });
-      } else {
-        // console.log(this.userService.loggedInUser);
-        Swal.fire('Already logged in');
-        this.router.navigate(['/grocery']);
-      }
+        });
     } else {
-      Swal.fire({
-        icon: 'error',
-        text: 'Required Credentials not provided'
-      });
-      this.router.navigate(['/register']);
+      // console.log(this.userService.loggedInUser);
+      Swal.fire('Already logged in');
+      this.router.navigate(['/grocery']);
     }
   }
 }

@@ -3,7 +3,7 @@
         <div class="col-md-4"></div>
         <div class="col-md-4">
             <img src="assets/1.jpg" class="mx-auto d-block img-thumbnail" alt="...">
-            <h3><i class="fa fa-user" aria-hidden="true"></i> {{user.username}}</h3>
+            <h3><i class="fa fa-user" aria-hidden="true"></i> {{user.username}} | <button routerLink="/profile/edit" class="btn btn-transparent" style="outline-width: 0; padding: 0; margin: 0;"><i class="fa fa-pencil-square-o" style="color: white;" aria-hidden="true"></i></button></h3>
             <p *ngIf="user.isadmin">ADMIN</p>
             <hr style="color: grey;">
             <div class="col-md-12"><i class="fa fa-envelope-o" aria-hidden="true"></i> : {{user.email}}</div>
@@ -14,27 +14,27 @@
     <hr>
     <div class="row">
         <h3 class="col-md-6 d-flex justify-content-start"><i class="fa fa-truck" aria-hidden="true" style="padding-right: 5px; padding-top: 3px;"></i> Recent Orders </h3>
+        
     </div>
-    <div *ngFor="let order of userOrder.foundOrders" class="list-group">
-        <div class="list-group-item list-group-item-action flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Order Id : {{order._id}}</h5>
-                <small>{{order.userId.username}} | {{order.userId.email}}</small>
-            </div>
-            <div class="row" *ngFor="let item of order.items">
-                <hr>
-                <p class="mb-1" style="padding-right: 5px;">Item: {{item.name}}</p>
-                <p class="mb-1" style="padding-right: 5px;">Quantity: x{{item.amount}}</p>
-                <p class="mb-1" style="padding-right: 5px;">Price: {{item.price}}</p>
+    <!-- <p>
+    <button class="btn btn-transparent d-flex justify-content-start" style="color: white; outline: transparent;" type="button" data-toggle="collapse" data-target="#orderDetails" aria-expanded="false" aria-controls="orderDetails">
+        Click here to Expand
+    </button>
+    </p> -->
+    
+        <div *ngFor="let order of userOrder.foundOrders" class="list-group">
+            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Order Id : {{order._id}}</h5>
+                    <small>{{order.userId.username}} | {{order.userId.email}}</small>
+                </div>
+                <div class="row" *ngFor="let item of order.items">
+                    <hr>
+                    <p class="mb-1" style="padding-right: 5px;">Item: {{item.name}}</p>
+                    <p class="mb-1" style="padding-right: 5px;">Quantity: x{{item.amount}}</p>
+                    <p class="mb-1" style="padding-right: 5px;">Price: {{item.price}}</p>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- <div class="row" id="wrappedContent">
-        <div *ngFor="let order of userOrder.foundOrders">
-            <p>{{order._id}}</p>
-            <div class="row" *ngFor="let item of order.items">
-                <p>{{item.name}}</p>
-            </div>
-        </div>
-    </div> -->
+        <!-- <div class="collapse" id="orderDetails"></div> -->
 </div>

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Grocery } from '../shared/grocery.model';
 import { GroceryService } from '../shared/grocery.service';
 import { OrderService } from '../shared/order.service';
+import { UserService } from '../shared/user.service';
 
 
 @Component({
@@ -14,17 +15,13 @@ import { OrderService } from '../shared/order.service';
 export class GroceryComponent implements OnInit {
 //JSON format : [{"name":"blahblah", "_id":, "price", "quantity", "image_url": },{"name":"blahblah", "_id":, "price", "quantity", "image_url": },{"name":"blahblah", "_id":, "price", "quantity", "image_url": }]
 title="List of Groceries";
-  
-// groceries=[
-//     {"name":"Apples", "_id":123, "price":2, "quantity":1, "image_url": 'https://images-na.ssl-images-amazon.com/images/I/81vo%2B9JNpIL._SL1500_.jpg' },
-//     {"name":"Bananas", "_id":132, "price":1, "quantity":1, "image_url": 'https://images-na.ssl-images-amazon.com/images/I/81vo%2B9JNpIL._SL1500_.jpg'},
-//     {"name":"Kiwis", "_id":1233, "price":3, "quantity":2, "image_url": 'https://images-na.ssl-images-amazon.com/images/I/81vo%2B9JNpIL._SL1500_.jpg'}
-//   ];
+
 loggedGroceries: any;
-  constructor(private groceryService: GroceryService, private _route: ActivatedRoute, private _router: Router, public orderService : OrderService) { }
+  constructor(private groceryService: GroceryService, private _route: ActivatedRoute, private _router: Router, public orderService : OrderService, private userService : UserService) { }
   
   ngOnInit() {
-    localStorage.setItem('cart', "[]");
+    localStorage['cart'] = JSON.stringify(this.orderService.cartItems);
+    localStorage['isLoggedIn'] = JSON.stringify(this.userService.isLoggedIn);
     this.groceryService.getGrocery()
       .subscribe((groceries => {
         let temp = groceries;

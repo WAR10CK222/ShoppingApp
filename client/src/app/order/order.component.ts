@@ -24,7 +24,7 @@ export class OrderComponent implements OnInit {
   ngOnInit(){
     this.orderService.cartItems = JSON.parse(localStorage['cart']);
     console.log(this.orderService.cartItems);
-    if(!this.orderService.cartItems.length){
+    if(this.orderService.cartItems.length === 0){
       this.emptyCart = "Cart is Empty";
       this.totalAmount = 0;
       // Swal.fire({
@@ -47,6 +47,7 @@ export class OrderComponent implements OnInit {
   }
 
   postOrder(){
+    let err : any;
     if(this.orderService.cartItems.length === 0){
       Swal.fire({
         icon: 'error',
@@ -62,7 +63,7 @@ export class OrderComponent implements OnInit {
         this.router.navigate(['/login']);
       }
       else {
-        Swal.fire('Order Sent Succesfully');
+        
         this.newOrder['userId'] = JSON.parse(localStorage['users'])['_id'];
         for(let i = 0; i < this.orderService.cartItems.length; i++){
           this.newOrder.items.push(this.orderService.cartItems[i]['_id']);
@@ -71,9 +72,21 @@ export class OrderComponent implements OnInit {
         this.orderService.sendOrder(this.newOrder)
           .subscribe(result => {
             this.sentOrder = result;
+            Swal.fire({
+              icon : 'success',
+              title: 'Order Sent Succesfully'
+            });
             console.log(this.sentOrder.loggedOrder);
-            Swal.fire(this.sentOrder.message);
+            // console.log(this.sentOrder.loggedOrder);
+            // Swal.fire(this.sentOrder.message);
+          }, error => {
+            err = error;
+            Swal.fire({
+              icon: 'error',
+              text: err.error.message
+            });
           }); 
+        this.clearOrder();
       }
     }
   }

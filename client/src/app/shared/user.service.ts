@@ -21,7 +21,7 @@ export class UserService {
     return this.webService.post('api/users/', newUser);
   }
 
-  updateUser(userId: string, updatedUser: User) {
+  updateUser(userId: string, updatedUser: Object) {
     return this.webService.patch(`api/users/${userId}`, updatedUser);
   }
 

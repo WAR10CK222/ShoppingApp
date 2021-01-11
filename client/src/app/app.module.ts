@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
+import { EditprofileComponent } from './editprofile/editprofile.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ProfileComponent } from './profile/profile.component';
     NavbarComponent,
     RegisterComponent,
     ProfileComponent,
+    EditprofileComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,61 @@
+<div class="container">
+    <h3><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Profile </h3>
+    <div class="row">
+        <form class="row g-3 col-md-6" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            <div class="col-md-12">
+                <label for="username" class="form-label">Username</label>
+                <input placeholder="Username" type="text" class="form-control" id="username" name="username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"  required>     
+                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                    <div *ngIf="f.username.errors.required">Username is required</div>
+                    <div *ngIf="f.username.errors.minlength">Username must be at least 8 characters</div>
+                    <div *ngIf="f.username.errors.maxlength">Username must not exceed 15 characters</div>
+                </div>
+            </div>
+            
+
+            <div class="col-md-12">
+                <label for="email" class="form-label">Email</label>
+                <input placeholder="Email" type="email" class="form-control" id="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }"  name="email" required>
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">Email is required</div>
+                    <div *ngIf="f.email.errors.pattern">Email must be a valid email address</div>
+                </div>
+            </div>
+            
+
+            <div class="col-md-12">
+                <label for="password" class="form-label">Password</label>
+                <input placeholder="Password" type="password" class="form-control" id="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"  name="password" required>
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                    <div *ngIf="f.password.errors.minlength">Password must be at least 8 characters</div>
+                    <div *ngIf="f.password.errors.maxlength">Password must not exceed 15 characters</div>
+                </div>
+            </div> 
+            
+            <div class="col-md-12" style="margin-top: 0;"><input type="checkbox" onclick="showPassword()"> Show Password</div>
+
+            <div class="col-md-12">
+                <label for="phone" class="form-label">Phone</label>
+                <input placeholder="Phone" type="tel" class="form-control" id="phone" formControlName="phone" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" name="phone" required>
+                <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                    <div *ngIf="f.phone.errors.required">Phone number is required</div>
+                    <div *ngIf="f.phone.errors.pattern">Phone must be a valid Phone No</div>
+                    <div *ngIf="f.phone.errors.minlength">10 Digit Phone - XXXXX XXXXX</div>
+                </div>
+            </div>
+            
+            <div class="row col-md-12">
+                <div class="col-md-4">
+                    <button  type="submit" class="btn btn-primary">Confirm Edit</button>
+                </div>
+                <div class="col-md-4 content-right">
+                    <button  type="button" (click)="onDelete()" class="btn btn-danger">Delete User</button>
+                </div>
+            </div>
+        </form>
+        <div class="col-md-6">
+            <img src="https://wallpaperaccess.com/full/184531.jpg" alt="...">  
+        </div>
+    </div>
+</div>

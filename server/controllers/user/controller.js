@@ -20,6 +20,8 @@ function login(req, res) {
                 res.status(400).send({ message: "Email or Password is not provided!", err : {}});
             } if(!compareSync(req.body.password, user.password)){
                 res.status(400).send({ message: "Incorrect Password", err : {}}); 
+            } if(user.status === 0) {
+                res.status(400).send({message : "User is inactive", err : {}});
             } else {
                 // res.session.user._id;
                 user.password = undefined;
