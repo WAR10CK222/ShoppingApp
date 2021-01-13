@@ -35,7 +35,6 @@ export class EditprofileComponent implements OnInit {
       this.editForm = this.formBuilder.group({
         username: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]],
         email: ['', [Validators.required, Validators.pattern("[^ @]*@[^ @]*")]],
-        password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
         phone: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]]
       });
       this.editForm.controls['username'].setValue(this.user.username);
@@ -68,17 +67,9 @@ export class EditprofileComponent implements OnInit {
 
   onSubmit() {
     console.log(this.editForm.value);
-    // if(this.editForm.value["password"] === ''){
-    //   delete this.editForm.value['password'];
-    //   console.log('New editForm', this.editForm.value);
-    //   this.updatedUser = this.editForm.value;
-    //   console.log('Updated User', this.updatedUser);
-    //   this.submitted = true;
-    // } else {
     this.updatedUser = this.editForm.value;
     console.log('Updated User', this.updatedUser);
     this.submitted = true;
-    //}
 
     // stop here if form is invalid
     if (this.editForm.invalid) {

@@ -12,6 +12,18 @@ function get(req, res) {
         .catch(err => res.status(400).send(err));
 }
 
+function checkPassword(req, res){
+    User.findById(req.params.id)
+        .then(foundUser => {
+            if(!compareSync(req.body.password, foundUser.password)){
+                res.status(200).send({ message: "Incorrect Password", status : 0});
+            } else {
+                res.status(200).send({ message: "Corrent Password", status : 1});
+            }
+        })
+        .catch(err => res.status(400).send({ message: "Server Error", error : err }))
+}
+
 function login(req, res) {
     //console.log(req); //Get req sent from frontend
     User.findOne({email: req.body.email})
@@ -30,6 +42,8 @@ function login(req, res) {
         })
         .catch(err => res.status(400).send({ message: "Server Error", error : err }))
 }
+
+
 
 function postNew(req, res) {
     let hash = hashSync(req.body.password, 10);
@@ -64,6 +78,8 @@ function update(req, res) {
         .catch(err => res.status(400).send({ message : 'Unknown Error', error : err}));
 }
 
+
+
 function remove(req, res) {
     User.findByIdAndDelete(req.params.id)
         .then(deletedUser => res.status(200).send({ message: 'User Deleted Successfully', deletedUser : deletedUser}))
@@ -76,5 +92,6 @@ module.exports = {
     postNew,
     show,
     update,
-    remove
+    remove,
+    checkPassword
 }

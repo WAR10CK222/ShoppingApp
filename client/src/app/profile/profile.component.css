@@ -14,7 +14,7 @@ img {
 }
 
 .list-group {
-  border-bottom: 2px solid white;
+  border-bottom: 1px solid white;
   margin-top: 1%;
 }
 
@@ -26,4 +26,8 @@ img {
 .list-group-item:hover {
   background-color: transparent;
   color: white;
+}
+
+.col-md-12 {
+  margin-top: 10px;
 }

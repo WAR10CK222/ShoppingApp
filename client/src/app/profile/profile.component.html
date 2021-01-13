@@ -11,17 +11,137 @@
         </div>
         <div class="col-md-4"></div>
     </div>
-    <hr>
-    <div class="row">
-        <h3 class="col-md-6 d-flex justify-content-start"><i class="fa fa-truck" aria-hidden="true" style="padding-right: 5px; padding-top: 3px;"></i> Recent Orders </h3>
-        
+    
+    <div class="row" (click)="showPassword=!showPassword">
+        <hr>
+        <h3 class="col-md-6 d-flex justify-content-start"> Change Password </h3>    
+    </div>
+    <div *ngIf="showPassword">
+        <form class="row r-3" [formGroup]="passwordForm" (ngSubmit)="onSubmit()">
+            <div class="col-md-12">
+                <label for="oldPassword" class="form-label">Old Password</label>
+                <input placeholder="Old Password" type="password" class="form-control" formControlName="oldPassword" name="oldPassword" id="oldPassword" [ngClass]="{ 'is-invalid': submitted && f.oldPassword.errors }" required>
+                <div *ngIf="submitted && f.oldPassword.errors" class="invalid-feedback">
+                    <div *ngIf="f.oldPassword.errors.required">Password is required</div>
+                    <div *ngIf="f.oldPassword.errors.minlength">Password must be at least 8 characters</div>
+                    <div *ngIf="f.oldPassword.errors.maxlength">Password must not exceed 15 characters</div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label for="newPassword" class="form-label">New Password</label>
+                <input placeholder="New Password" type="password" class="form-control" formControlName="newPassword" name="newPassword" id="newPassword" [ngClass]="{ 'is-invalid': submitted && f.newPassword.errors }" required>
+                <div *ngIf="submitted && f.newPassword.errors" class="invalid-feedback">
+                    <div *ngIf="f.newPassword.errors.required">Password is required</div>
+                    <div *ngIf="f.newPassword.errors.minlength">Password must be at least 8 characters</div>
+                    <div *ngIf="f.newPassword.errors.maxlength">Password must not exceed 15 characters</div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <input placeholder="Confirm Password" type="password" class="form-control" formControlName="confirmPassword" name="confirmPassword" id="confirmPassword" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" required>
+                <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                    <div *ngIf="f.confirmPassword.errors.required">Password is required</div>
+                    <div *ngIf="f.confirmPassword.errors.minlength">Password must be at least 8 characters</div>
+                    <div *ngIf="f.confirmPassword.errors.maxlength">Password must not exceed 15 characters</div>
+                    <div *ngIf="f.confirmPassword.errors.checkPasswords">Confirm Password must match New Password</div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button  type="submit" class="btn btn-danger">Change Password</button>
+            </div>
+        </form>
+        <br>
+    </div>
+    
+    <div class="row" *ngIf="user.isadmin" (click)="showUsers=!showUsers">
+        <hr>
+        <h3 class="col-md-6 d-flex justify-content-start"> All Users </h3>
+    </div>
+    <div *ngIf="showUsers">
+        <div *ngFor="let list of allUsers" class="list-group">
+            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1"> Username : {{list.username}} | Email: {{list.email}} </h5>
+                    <button  *ngIf="list.status === 1" class="btn btn-danger" type="button" (click)="inactive(list)">Inactive User</button>
+                    <button  *ngIf="list.status === 0" class="btn btn-success" type="button" (click)="active(list)">Active User</button>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    
+    <div class="row" *ngIf="user.isadmin" (click)="showGroceries=!showGroceries">
+        <hr>
+        <h3 class="col-md-6 d-flex justify-content-start"> All Groceries </h3>
+    </div>
+    <div *ngIf="showGroceries">
+        <div *ngFor="let grocery of allGrocery" class="list-group">
+            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1"> Grocery : {{grocery.name}} | Price: {{grocery.price}} | Quantity : {{grocery.amount}} </h5>
+                </div>
+            </div>
+        </div>
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <button (click)="showGroceryForm=!showGroceryForm" class="btn btn-success mb-1">Add New Grocery</button>
+            </div>
+            <br>
+            <div *ngIf="showGroceryForm">
+                <form class="row r-3" [formGroup]="groceryForm" (ngSubmit)="onGrocerySubmit()">
+                    <div class="col-md-12">
+                        <label for="name" class="form-label">Grocery Name</label>
+                        <input placeholder="Grocery Name" type="text" class="form-control" formControlName="name" name="name" id="name" [ngClass]="{ 'is-invalid' : grocerysubmitted && g.name.errors }" required>
+                        <div *ngIf="grocerysubmitted && g.name.errors" class="invalid-feedback">
+                            <div *ngIf="g.name.errors.required">Grocery name is required</div>
+                        </div>
+                    </div>
+            
+                    <div class="col-md-12">
+                        <label for="price" class="form-label">Grocery Price</label>
+                        <input placeholder="Grocery Price" type="text" class="form-control" formControlName="price" name="price" id="price" [ngClass]="{ 'is-invalid' : grocerysubmitted && g.price.errors }" required>
+                        <div *ngIf="grocerysubmitted && g.price.errors" class="invalid-feedback">
+                            <div *ngIf="g.price.errors.required">Grocery price is required</div>
+                            <div *ngIf="g.price.errors.minlength">Grocery must have atleast some price</div>
+                            <div *ngIf="g.price.errors.minlength">Grocery must have atleast some price</div>
+                        </div>
+                    </div>
+            
+                    <div class="col-md-12">
+                        <label for="amount" class="form-label">Grocery Quantity</label>
+                        <input placeholder="Grocery Quantity" type="text" class="form-control" formControlName="amount" name="amount" id="amount" [ngClass]="{ 'is-invalid' : grocerysubmitted && g.amount.errors }" required>
+                        <div *ngIf="grocerysubmitted && g.amount.errors" class="invalid-feedback">
+                            <div *ngIf="g.amount.errors.required">Grocery Quantity is required</div>
+                            <div *ngIf="g.amount.errors.minlength">Grocery must have atleast some Quantity</div>
+                        </div>
+                    </div>
+            
+                    <div class="col-md-12">
+                        <label for="img" class="form-label">Grocery Image</label>
+                        <input placeholder="Grocery Image URL" type="text" class="form-control" formControlName="img" name="img" id="img" [ngClass]="{ 'is-invalid' : grocerysubmitted && g.img.errors }" required>
+                        <div *ngIf="grocerysubmitted && g.img.errors" class="invalid-feedback">
+                            <div *ngIf="g.img.errors.required">Grocery Image URL is required</div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">Add Grocery</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" (click)="showDetail=!showDetail">
+        <hr>
+        <h3 class="col-md-6 d-flex justify-content-start"><i class="fa fa-truck" aria-hidden="true" style="padding-right: 5px; padding-top: 3px;"></i> Recent Orders </h3>    
     </div>
     <!-- <p>
     <button class="btn btn-transparent d-flex justify-content-start" style="color: white; outline: transparent;" type="button" data-toggle="collapse" data-target="#orderDetails" aria-expanded="false" aria-controls="orderDetails">
         Click here to Expand
     </button>
     </p> -->
-    
+    <div *ngIf="showDetail">
         <div *ngFor="let order of userOrder.foundOrders" class="list-group">
             <div class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
@@ -36,5 +156,6 @@
                 </div>
             </div>
         </div>
+    </div>
         <!-- <div class="collapse" id="orderDetails"></div> -->
 </div>

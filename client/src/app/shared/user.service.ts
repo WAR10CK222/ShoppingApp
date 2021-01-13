@@ -17,6 +17,10 @@ export class UserService {
     return this.webService.post('api/users/login', loginUser);
   }
 
+  checkPassword(userId : string, password : string) {
+    return this.webService.post(`api/users/${userId}`, { password : password });
+  }
+
   createUser(newUser: {}) {
     return this.webService.post('api/users/', newUser);
   }

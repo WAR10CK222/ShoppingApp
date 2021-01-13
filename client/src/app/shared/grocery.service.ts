@@ -12,7 +12,7 @@ export class GroceryService {
     return this.webService.get('api/groceries');
   }
 
-  createGrocery(newGrocery : Grocery){
+  createGrocery(newGrocery : Object){
     return this.webService.post('api/groceries', newGrocery);
   }
 }
