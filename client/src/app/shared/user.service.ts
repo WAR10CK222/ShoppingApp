@@ -17,11 +17,15 @@ export class UserService {
     return this.webService.post('api/users/login', loginUser);
   }
 
+  checkPassword(userId : string, password : string) {
+    return this.webService.post(`api/users/${userId}`, { password : password });
+  }
+
   createUser(newUser: {}) {
     return this.webService.post('api/users/', newUser);
   }
 
-  updateUser(userId: string, updatedUser: User) {
+  updateUser(userId: string, updatedUser: Object) {
     return this.webService.patch(`api/users/${userId}`, updatedUser);
   }
 

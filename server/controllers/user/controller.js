@@ -12,31 +12,51 @@ function get(req, res) {
         .catch(err => res.status(400).send(err));
 }
 
+function checkPassword(req, res){
+    User.findById(req.params.id)
+        .then(foundUser => {
+            if(!compareSync(req.body.password, foundUser.password)){
+                res.status(200).send({ message: "Incorrect Password", status : 0});
+            } else {
+                res.status(200).send({ message: "Corrent Password", status : 1});
+            }
+        })
+        .catch(err => res.status(400).send({ message: "Server Error", error : err }))
+}
+
 function login(req, res) {
     //console.log(req); //Get req sent from frontend
     User.findOne({email: req.body.email})
         .then(user => {
             if(!(req.body.email && req.body.password)){
-                res.status(400).send('Email or Password is not provided!');
+                res.status(400).send({ message: "Email or Password is not provided!", err : {}});
             } if(!compareSync(req.body.password, user.password)){
-                res.status(400).send('Incorrect Password');
+                res.status(400).send({ message: "Incorrect Password", err : {}}); 
+            } if(user.status === 0) {
+                res.status(400).send({message : "User is inactive", err : {}});
             } else {
                 // res.session.user._id;
                 user.password = undefined;
-                res.status(200).send(user);
+                res.status(200).send({message: "Logged User Successfully !!", user : user});
             }
         })
-        .catch(err => res.status(400).send('Unknown Error !!'))
+        .catch(err => res.status(400).send({ message: "Server Error", error : err }))
 }
+
+
 
 function postNew(req, res) {
     let hash = hashSync(req.body.password, 10);
     req.body.password = hash;
-    (new User(req.body)).save()
-        .then(list => {
-            list.password = undefined;
-            res.status(200).send(list)})
-        .catch(err => res.status(400).send(err));
+    if(!(req.body.email && req.body.password && req.body.phone && req.body.username)){
+        res.status(400).send({ message: "Credentials are not provided!", err : {}});
+    } else {
+        (new User(req.body)).save()
+            .then(user => {
+                user.password = undefined;
+                res.status(200).send({message: "Registered User Successfully !!", user : user})})
+            .catch(err => res.status(400).send({ message: "Server Error", error : err}));
+    }
 }
 
 function show(req, res) {
@@ -54,14 +74,16 @@ function update(req, res) {
         req.body.password = hash;
     }
     User.findByIdAndUpdate(req.params.id, {$set : req.body}, {new : true})
-        .then(updatedUser => res.status(200).send(updatedUser))
-        .catch(err => res.status(400).send('Unknown Error', {err}));
+        .then(updatedUser => res.status(200).send({ message: 'User Successfully updated', updatedUser : updatedUser}))
+        .catch(err => res.status(400).send({ message : 'Unknown Error', error : err}));
 }
+
+
 
 function remove(req, res) {
     User.findByIdAndDelete(req.params.id)
-        .then(deletedUser => res.status(200).send({deletedUser}))
-        .catch(err => res.status(400).send(err));
+        .then(deletedUser => res.status(200).send({ message: 'User Deleted Successfully', deletedUser : deletedUser}))
+        .catch(err => res.status(400).send({ message : 'Unknown Error', error : err}));
 }
 
 module.exports = {
@@ -70,5 +92,6 @@ module.exports = {
     postNew,
     show,
     update,
-    remove
+    remove,
+    checkPassword
 }

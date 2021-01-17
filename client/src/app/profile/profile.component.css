@@ -1,0 +1,33 @@
+.container {
+  margin-top: 5%;
+  margin-bottom: 50px;
+  padding: 3% 3%;
+  border: 3px solid black;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.list-group {
+  border-bottom: 1px solid white;
+  margin-top: 1%;
+}
+
+.list-group-item {
+  background-color: transparent;
+  color: white;
+}
+
+.list-group-item:hover {
+  background-color: transparent;
+  color: white;
+}
+
+.col-md-12 {
+  margin-top: 10px;
+}
